@@ -1,0 +1,19 @@
+* Deliverables
++ _Architectural diagram  illustrating the components and data flow._
+  + If you would use some third party (open source) service to implement it then mention why that service is most suitable and what changes/configurations will be required on top of that service.
+
++ _Assumptions Made_
+  + If you would use some third party (open source) service to implement it then mention why that service is most suitable and what changes/configurations will be required on top of that service.
+
++ _Prototype and Code for Demonstration_.
+
++ _A separate word/pdf doc for the architecture and data flow_
+
+* Things I need to study
+** What is "IoT Gateway" ?
+
+* Architectural Considerations
+** Stateful Application
+** 
+
+* Architecture Of Project
