@@ -149,6 +149,7 @@ timestamp,sensor_id,value
   #+end_src
 
 + Timing diagram is as below:
+  [[./images/compound_alarm.jpg]]
 
 + Alarm data stored in SQLite3 is as:
   #+begin_src shell
