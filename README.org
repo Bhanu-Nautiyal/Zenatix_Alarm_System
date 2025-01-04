@@ -78,7 +78,7 @@ timestamp,sensor_id,value
 #+end_src
 
 Its Timing diagram is as below:
-[YAHA TIMING DIAGRAM LAGAO for SIMPLE ALARM !!!]
+[[./images/simple_alarm.jpg]]
 
 + Alarm Data stored in Sqlite3 database is as:
 #+begin_src shell
