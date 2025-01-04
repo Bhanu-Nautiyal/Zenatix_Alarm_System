@@ -43,4 +43,121 @@
 + Alarms which are currently active are only sent to broker.
   
 + But all alarm data either ACTIVE or CLEARED will be maintained at the database side for logging and monitoring etc.
+
 * Architecture Of Project
+
+* Implementation of the Alarm System
+** Case 1: Simple Alarm
+In this example alarm will get triggered only and only when data points in sensor is above a threshold and for some duration.
+
+Eg: Let say I have sensor1 for Temperature
+    Its Alarm Rule is as below:
+    #+begin_src shell
+     Name:             "High Temperature",
+     SensorID:         "temperature",
+     Type:             "simple",
+     PrimaryThreshold: 21.5,
+     Duration:         2,
+     Topic:            "alarms/temperature",
+    #+end_src
+
+Its Data is:
+#+begin_src csv
+timestamp,sensor_id,value
+2024-01-02 10:00:00,sensor1,20
+2024-01-02 10:01:00,sensor1,19.45
+2024-01-02 10:02:00,sensor1,22.4
+2024-01-02 10:03:00,sensor1,25.4
+2024-01-02 10:04:00,sensor1,29.32
+2024-01-02 10:05:00,sensor1,28.40
+2024-01-02 10:06:00,sensor1,17.2
+2024-01-02 10:07:00,sensor1,19.15
+2024-01-02 10:08:00,sensor1,18.1
+2024-01-02 10:09:00,sensor1,12.1
+2024-01-02 10:10:00,sensor1,20.00
+#+end_src
+
+Its Timing diagram is as below:
+[YAHA TIMING DIAGRAM LAGAO for SIMPLE ALARM !!!]
+
++ Alarm Data stored in Sqlite3 database is as:
+#+begin_src shell
+╰─⠠⠵ sqlite3 alarms.db 
+SQLite version 3.47.2 2024-12-07 20:39:59
+Enter ".help" for usage hints.
+sqlite> SELECT * FROM alarms;
+1|1|2025-01-04 19:39:51.805915935+05:30|2025-01-04 19:39:55.813122838+05:30|CLEARED
+2|1|2025-01-04 19:39:51.805915935+05:30|2025-01-04 19:39:55.813122838+05:30|CLEARED
+sqlite> 
+#+end_src
+
+** Case: Compound Alarm [Primary and Shunt Combination]
+In this case alarm will triggered by not only primary condition but also by shunt condition as well.
+
++ Primary Alarm Rule (Sensor1: Temperature)
+  #+begin_src shell
+     Name:             "High Temperature",
+     SensorID:         "temperature",
+     Type:             "simple",
+     PrimaryThreshold: 21.5,
+     Duration:         2, 
+     Topic:            "alarms/temperature",
+  #+end_src
+
++ Conditional Alarm Rule (Sensor1: Temperature and Sensor2: Current)
+  #+begin_src shell
+   Name:             "High Temperature with Current",
+   SensorID:         "temperature",
+   Type:             "conditional",
+   PrimaryThreshold: 25.5,
+   Duration:         3,
+   ShuntSensorID:    "current",
+   ShuntThreshold:   0.2,
+   Topic:            "alarms/conditional",
+  #+end_src
+
++ Sensor1 Data (Temperature)
+  #+begin_src shell
+timestamp,sensor_id,value
+2024-01-02 10:00:00,sensor1,20
+2024-01-02 10:01:00,sensor1,29.45
+2024-01-02 10:02:00,sensor1,22.4
+2024-01-02 10:03:00,sensor1,25.4
+2024-01-02 10:04:00,sensor1,19.32
+2024-01-02 10:05:00,sensor1,18.40
+2024-01-02 10:06:00,sensor1,27.2
+2024-01-02 10:07:00,sensor1,29.15
+2024-01-02 10:08:00,sensor1,28.1
+2024-01-02 10:09:00,sensor1,22.1
+2024-01-02 10:10:00,sensor1,20.00
+  #+end_src
+
++ Sensor2 Data (Current)
+  #+begin_src shell
+timestamp,sensor_id,value
+2024-01-02 10:00:00,sensor2,0.02
+2024-01-02 10:01:00,sensor2,0.01
+2024-01-02 10:02:00,sensor2,0.03
+2024-01-02 10:03:00,sensor2,0.00
+2024-01-02 10:04:00,sensor2,0.00
+2024-01-02 10:05:00,sensor2,0.07
+2024-01-02 10:06:00,sensor2,0.84
+2024-01-02 10:07:00,sensor2,0.93
+2024-01-02 10:08:00,sensor2,0.92
+2024-01-02 10:09:00,sensor2,0.56
+2024-01-02 10:10:00,sensor2,0.00
+  #+end_src
+
++ Timing diagram is as below:
+
++ Alarm data stored in SQLite3 is as:
+  #+begin_src shell
+╰─⠠⠵ sqlite3 alarms.db 
+SQLite version 3.47.2 2024-12-07 20:39:59
+Enter ".help" for usage hints.
+sqlite> SELECT * FROM alarms;
+1|1|2025-01-04 20:01:10.483906749+05:30|2025-01-04 20:01:13.487491796+05:30|CLEARED
+2|1|2025-01-04 20:01:15.490308617+05:30|2025-01-04 20:01:19.498596802+05:30|CLEARED
+3|1|2025-01-04 20:01:15.490308617+05:30|2025-01-04 20:01:19.498596802+05:30|CLEARED
+4|2|2025-01-04 20:01:15.490309358+05:30|2025-01-04 20:01:19.500736419+05:30|CLEARED
+  #+end_src
