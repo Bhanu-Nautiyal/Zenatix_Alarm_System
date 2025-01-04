@@ -45,7 +45,8 @@
 + But all alarm data either ACTIVE or CLEARED will be maintained at the database side for logging and monitoring etc.
 
 * Architecture Of Project
-
+** Component Diagram of Alarm System
+[[~/Downloads/Untitled Diagram.drawio.png]]
 * Implementation of the Alarm System
 ** Case 1: Simple Alarm
 In this example alarm will get triggered only and only when data points in sensor is above a threshold and for some duration.
