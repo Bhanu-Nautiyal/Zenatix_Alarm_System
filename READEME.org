@@ -9,11 +9,38 @@
 
 + _A separate word/pdf doc for the architecture and data flow_
 
-* Things I need to study
-** What is "IoT Gateway" ?
+* Mosquitto MQTT Broker
++ I am using "eclipse mosquitto mqtt" broker for this project.
 
+** Why I am using it?
++ Easy to implement especially for prototyping.
++ Lightweight by design.
++ Has inbuilt message storage.
+
+** Why I shouldnt use it ?
++ Has limited scalability.
++ No Web interface.
++ Complex integration with data management softwares like: SQL, redis etc.
++ No in-built clustering.
 * Architectural Considerations
-** Stateful Application
-** 
+** Assumptions
++ Since I am assuming that the broker I am using is just for decoupling the publishers and subscribers and has persistance of the topics only.
 
++ Thats why I will be storing the alarms data (either ACTIVE or CLEARED) in the Publisher side only.
+
++ Data coming from sensors will be taken as csv file.
+
++ Sensors are assumed as PRIMARY and SHUNT.
+  
++ PRIMARY sensors can has 2 types of alarms:
+  1.) Simple alarm: Triggered when their values when reach a certain threshold for certain time duration.
+  2.) Conditional alarm: Triggered when the both PRIMARY sensor and SECONDARY sensor data points reach a certain threshold for certain time duration.
+
++ Alarms can have 2 states:
+  1.) ACTIVE
+  2.) CLEARED
+
++ Alarms which are currently active are only sent to broker.
+  
++ But all alarm data either ACTIVE or CLEARED will be maintained at the database side for logging and monitoring etc.
 * Architecture Of Project
