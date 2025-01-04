@@ -22,8 +22,7 @@
 + No Web interface.
 + Complex integration with data management softwares like: SQL, redis etc.
 + No in-built clustering.
-* Architectural Considerations
-** Assumptions
+* Assumptions
 + Since I am assuming that the broker I am using is just for decoupling the publishers and subscribers and has persistance of the topics only.
 
 + Thats why I will be storing the alarms data (either ACTIVE or CLEARED) in the Publisher side only.
@@ -46,7 +45,7 @@
 
 * Architecture Of Project
 ** Component Diagram of Alarm System
-[[~/Downloads/Untitled Diagram.drawio.png]]
+[[./images/Component_Diag.png]]
 * Implementation of the Alarm System
 ** Case 1: Simple Alarm
 In this example alarm will get triggered only and only when data points in sensor is above a threshold and for some duration.
