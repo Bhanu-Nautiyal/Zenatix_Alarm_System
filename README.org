@@ -1,13 +1,11 @@
-* Deliverables
-+ _Architectural diagram  illustrating the components and data flow._
-  + If you would use some third party (open source) service to implement it then mention why that service is most suitable and what changes/configurations will be required on top of that service.
-
-+ _Assumptions Made_
-  + If you would use some third party (open source) service to implement it then mention why that service is most suitable and what changes/configurations will be required on top of that service.
-
-+ _Prototype and Code for Demonstration_.
-
-+ _A separate word/pdf doc for the architecture and data flow_
+* How to run this code?
++ *NOTE:* You must have sqlite3 database installed in your system.
++ Just open terminal and install the requirements.txt, present in "Python_Backend" folder.
++ Active the virtual environment.
++ Write the line in terminal:
+  #+begin_src shell
+python3 main.py
+  #+end_src
 
 * Mosquitto MQTT Broker
 + I am using "eclipse mosquitto mqtt" broker for this project.
